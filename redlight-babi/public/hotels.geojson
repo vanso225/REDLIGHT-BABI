@@ -1,0 +1,225 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "1",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-4.0719093, 5.3433655]
+      },
+      "properties": {
+        "Nom": "La Mahinda",
+        "Commune": "Yopougon",
+        "Quartier": "Sicogi lavage",
+        "Prix_Heure_Ventile": 2000,
+        "Prix_Heure_Clim": 3000,
+        "Prix_Nuit_Ventile": 7000,
+        "Prix_Nuit_Clim": 10000,
+        "Wifi": false,
+        "Parking": false,
+        "Discret_Entree": true,
+        "Statut_Actuel": "Ouvert",
+        "Telephone": "0707070707"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "2",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-4.0719287, 5.3439759]
+      },
+      "properties": {
+        "Nom": "Couloir Ponty",
+        "Commune": "Yopougon",
+        "Quartier": "Sicogi William Ponty",
+        "Prix_Heure_Ventile": 2000,
+        "Prix_Heure_Clim": 0,
+        "Prix_Nuit_Ventile": 7000,
+        "Prix_Nuit_Clim": 0,
+        "Wifi": false,
+        "Parking": false,
+        "Discret_Entree": true,
+        "Statut_Actuel": "Ouvert",
+        "Telephone": "0101010101"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "3",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-4.071247, 5.3438914]
+      },
+      "properties": {
+        "Nom": "Chez COCO",
+        "Commune": "Yopougon",
+        "Quartier": "Sicogi 2 poteaux",
+        "Prix_Heure_Ventile": 2000,
+        "Prix_Heure_Clim": 0,
+        "Prix_Nuit_Ventile": 7000,
+        "Prix_Nuit_Clim": 0,
+        "Wifi": false,
+        "Parking": false,
+        "Discret_Entree": true,
+        "Statut_Actuel": "Ouvert",
+        "Telephone": "0505050505"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "4",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-4.0709584, 5.3436129]
+      },
+      "properties": {
+        "Nom": "Le Miel",
+        "Commune": "Yopougon",
+        "Quartier": "Sicogi 2 poteaux",
+        "Prix_Heure_Ventile": 2000,
+        "Prix_Heure_Clim": 3000,
+        "Prix_Nuit_Ventile": 7000,
+        "Prix_Nuit_Clim": 10000,
+        "Wifi": false,
+        "Parking": false,
+        "Discret_Entree": true,
+        "Statut_Actuel": "Ouvert",
+        "Telephone": "0708091011"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "5",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-4.0716431, 5.3443277]
+      },
+      "properties": {
+        "Nom": "Le Studio",
+        "Commune": "Yopougon",
+        "Quartier": "Sicogi William Ponty",
+        "Prix_Heure_Ventile": 2000,
+        "Prix_Heure_Clim": 3000,
+        "Prix_Nuit_Ventile": 7000,
+        "Prix_Nuit_Clim": 10000,
+        "Wifi": false,
+        "Parking": false,
+        "Discret_Entree": true,
+        "Statut_Actuel": "Ouvert",
+        "Telephone": "0102030405"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "6",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-4.0695803, 5.3434055]
+      },
+      "properties": {
+        "Nom": "Le Choquant",
+        "Commune": "Yopougon",
+        "Quartier": "Sicogi Selmer",
+        "Prix_Heure_Ventile": 0,
+        "Prix_Heure_Clim": 3000,
+        "Prix_Nuit_Ventile": 0,
+        "Prix_Nuit_Clim": 12000,
+        "Wifi": false,
+        "Parking": false,
+        "Discret_Entree": true,
+        "Statut_Actuel": "Ouvert",
+        "Telephone": "0506070809"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "7",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-4.0693965, 5.3438129]
+      },
+      "properties": {
+        "Nom": "ELIXIR Residence",
+        "Commune": "Yopougon",
+        "Quartier": "Sicogi Selmer",
+        "Prix_Heure_Ventile": 0,
+        "Prix_Heure_Clim": 0,
+        "Prix_Nuit_Ventile": 0,
+        "Prix_Nuit_Clim": 15000,
+        "Wifi": true,
+        "Parking": false,
+        "Discret_Entree": false,
+        "Statut_Actuel": "Ouvert",
+        "Telephone": "0747474747"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "8",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-4.0690938, 5.3439237]
+      },
+      "properties": {
+        "Nom": "Le Pont",
+        "Commune": "Yopougon",
+        "Quartier": "Sicogi Selmer",
+        "Prix_Heure_Ventile": 2000,
+        "Prix_Heure_Clim": 3000,
+        "Prix_Nuit_Ventile": 7000,
+        "Prix_Nuit_Clim": 10000,
+        "Wifi": false,
+        "Parking": false,
+        "Discret_Entree": true,
+        "Statut_Actuel": "Ouvert",
+        "Telephone": "0123456789"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "9",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-4.0679423, 5.3463846]
+      },
+      "properties": {
+        "Nom": "Hotel La Residence",
+        "Commune": "Yopougon",
+        "Quartier": "Selmer rue princesse",
+        "Prix_Heure_Ventile": 2000,
+        "Prix_Heure_Clim": 3000,
+        "Prix_Nuit_Ventile": 7000,
+        "Prix_Nuit_Clim": 10000,
+        "Wifi": false,
+        "Parking": false,
+        "Discret_Entree": true,
+        "Statut_Actuel": "Ouvert",
+        "Telephone": "0555555555"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "10",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-4.0706462, 5.3413409]
+      },
+      "properties": {
+        "Nom": "Hotel CP1",
+        "Commune": "Yopougon",
+        "Quartier": "Sicogi CP1",
+        "Prix_Heure_Ventile": 2000,
+        "Prix_Heure_Clim": 0,
+        "Prix_Nuit_Ventile": 7000,
+        "Prix_Nuit_Clim": 0,
+        "Wifi": false,
+        "Parking": false,
+        "Discret_Entree": false,
+        "Statut_Actuel": "Ouvert",
+        "Telephone": "0707010101"
+      }
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "name": "REDLIGHT-app",
+  "description": "Plateforme de recensement d'hôtels économiques à Abidjan avec carte interactive Mapbox.",
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "majorCapabilities": []
+}
