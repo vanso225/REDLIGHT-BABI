@@ -634,7 +634,7 @@ export default function App() {
       {page === 'home' && <HomePage />}
       
       {page === 'map' && (
-        <div className="flex-1 flex flex-col overflow-hidden text-[#e5e5e5] font-sans relative border-x-[12px] md:border-x-[24px] border-[#1a1a1a]">
+        <div className="h-screen flex flex-col overflow-hidden text-[#e5e5e5] font-sans relative border-x-[12px] md:border-x-[24px] border-[#1a1a1a]">
           <Navbar page={page} setPage={setPage} mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
           
           <div className="flex-1 flex flex-col md:flex-row relative overflow-hidden">
@@ -683,12 +683,14 @@ export default function App() {
             </button>
 
             {/* Main Content - Map */}
-            <main className="flex-1 relative overflow-hidden bg-zinc-950 min-h-[400px] md:h-full border-l border-red-900/10">
-              <Map 
-                hotels={filteredHotels} 
-                onHotelClick={setSelectedHotel} 
-                selectedHotel={selectedHotel}
-              />
+            <main className="flex-1 relative overflow-hidden bg-zinc-950 border-l border-red-900/10 flex flex-col">
+              <div className="flex-1 min-h-0 relative">
+                <Map 
+                  hotels={filteredHotels} 
+                  onHotelClick={setSelectedHotel} 
+                  selectedHotel={selectedHotel}
+                />
+              </div>
 
               {/* Legend Panel - Hide on small mobile */}
               <div className="hidden sm:flex absolute top-4 right-4 z-10 bg-black/90 p-2.5 rounded-xl border border-zinc-800 gap-4 text-[9px] uppercase font-black tracking-widest">
