@@ -1,11 +1,11 @@
 {
   "name": "REDLIGHT Abidjan",
   "short_name": "REDLIGHT",
-  "description": "Recensement d'hôtels économiques à Abidjan",
+  "description": "Trouve ton passage ou ton dormant en un clic sur REDLIGHT !",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#050505",
-  "theme_color": "#ff0000",
+  "theme_color": "#dc2626",
   "icons": [
     {
       "src": "/icon.svg",

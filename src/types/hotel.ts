@@ -1,12 +1,9 @@
-export type StatutActuel = 'Ouvert' | 'Fermé';
-
 export interface Hotel {
   id: string;
   Nom: string;
   Commune: string;
   Quartier: string;
-  Latitude: number;
-  Longitude: number;
+  Telephone: string;
   Prix_Heure_Ventile: number;
   Prix_Heure_Clim: number;
   Prix_Nuit_Ventile: number;
@@ -14,8 +11,8 @@ export interface Hotel {
   Wifi: boolean;
   Parking: boolean;
   Discret_Entree: boolean;
-  Statut_Actuel: StatutActuel;
   isFull: boolean;
-  Telephone?: string;
-  Description?: string;
+  Statut_Actuel: 'Ouvert' | 'Fermé';
+  Latitude: number;
+  Longitude: number;
 }

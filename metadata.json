@@ -1,0 +1,7 @@
+{
+  "name": "Redlight-babi",
+  "description": "Une plateforme technique et géographiquement équilibrée pour la découverte d'établissements hôteliers à Abidjan, optimisée pour la mobilité nocturne.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}

@@ -12,20 +12,64 @@ import HotelDetailPanel from './components/HotelDetailPanel';
 import hotelsData from './data/hotels.json';
 import { Hotel } from './types/hotel';
 import { ForumMessage } from './types/forum';
+import { OWNER_WHATSAPP, ABIDJAN_COMMUNES } from './constants';
 
 const hotels = hotelsData as Hotel[];
 
-const ALL_ABIDJAN_COMMUNES = [
-  "Abobo", "Adjamé", "Anyama", "Attécoubé", "Bingerville", "Cocody", "Koumassi", 
-  "Marcory", "Plateau", "Port-Bouët", "Songon", "Treichville", "Yopougon"
-];
+// Extract Navbar into a separate component for better performance
+const Navbar = ({ 
+  page, 
+  setPage, 
+  mobileMenuOpen, 
+  setMobileMenuOpen 
+}: { 
+  page: string; 
+  setPage: (p: any) => void; 
+  mobileMenuOpen: boolean; 
+  setMobileMenuOpen: (o: boolean) => void;
+}) => (
+  <nav className="p-6 flex justify-between items-center border-b border-white/5 sticky top-0 bg-zinc-950/80 backdrop-blur-md z-50">
+    <h1 onClick={() => { setPage('home'); setMobileMenuOpen(false); }} className="text-2xl font-black tracking-tighter text-red-600 flex items-center gap-2 cursor-pointer transition-transform active:scale-95">
+      <Lightbulb size={24} className="fill-red-600 text-red-600 drop-shadow-[0_0_8px_rgba(220,38,38,0.8)]" />
+      REDLIGHT
+    </h1>
+    <div className="space-x-8 hidden md:flex items-center text-[10px] uppercase tracking-[0.2em] font-black italic">
+      <button onClick={() => setPage('home')} className={`transition ${page === 'home' ? 'text-red-500' : 'text-zinc-500 hover:text-white'}`}>Accueil</button>
+      <button onClick={() => setPage('map')} className={`transition ${page === 'map' ? 'text-red-500' : 'text-zinc-500 hover:text-white'}`}>La Carte</button>
+      <button onClick={() => setPage('forum')} className={`transition ${page === 'forum' ? 'text-red-500' : 'text-zinc-500 hover:text-white'}`}>Communauté</button>
+      <button onClick={() => setPage('managers')} className={`transition px-4 py-2 rounded border border-white/5 bg-white/5 hover:bg-white/10 ${page === 'managers' ? 'text-red-500 border-red-500/30 bg-red-500/5' : 'text-zinc-500 hover:text-white'}`}>Espace Gérants</button>
+    </div>
+    <button 
+      onClick={() => setMobileMenuOpen(!mobileMenuOpen)} 
+      className="md:hidden text-xs font-black uppercase tracking-widest border border-white/10 px-4 py-2 rounded-lg bg-zinc-900 text-zinc-400"
+    >
+      {mobileMenuOpen ? 'Fermer' : 'Menu'}
+    </button>
+
+    <AnimatePresence>
+      {mobileMenuOpen && (
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          className="absolute top-full left-0 right-0 bg-zinc-950 border-b border-white/10 p-8 flex flex-col gap-6 md:hidden z-50 shadow-2xl"
+        >
+          <button onClick={() => { setPage('home'); setMobileMenuOpen(false); }} className={`text-left text-xs font-black uppercase tracking-[0.2em] ${page === 'home' ? 'text-red-500' : 'text-zinc-400'}`}>Accueil</button>
+          <button onClick={() => { setPage('map'); setMobileMenuOpen(false); }} className={`text-left text-xs font-black uppercase tracking-[0.2em] ${page === 'map' ? 'text-red-500' : 'text-zinc-400'}`}>La Carte</button>
+          <button onClick={() => { setPage('forum'); setMobileMenuOpen(false); }} className={`text-left text-xs font-black uppercase tracking-[0.2em] ${page === 'forum' ? 'text-red-500' : 'text-zinc-400'}`}>Communauté</button>
+          <button onClick={() => { setPage('managers'); setMobileMenuOpen(false); }} className={`text-left text-xs font-black uppercase tracking-[0.2em] ${page === 'managers' ? 'text-red-500' : 'text-zinc-400'}`}>Espace Gérants</button>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  </nav>
+);
 
 export default function App() {
   const [page, setPage] = useState<'home' | 'map' | 'forum' | 'managers'>('home');
   const [selectedHotel, setSelectedHotel] = useState<Hotel | null>(null);
   const [selectedCommune, setSelectedCommune] = useState<string | null>(null);
-  const [maxPrice, setMaxPrice] = useState<number>(15000);
-  const [showOnlyAvailable, setShowOnlyAvailable] = useState<boolean>(false);
+  const [maxPrice, setMaxPrice] = useState<number>(6000); // Default to a reasonable passage budget
+  const [showOnlyAvailable, setShowOnlyAvailable] = useState<boolean>(true); // Default to true for better UX
   
   const [forumMessages, setForumMessages] = useState<ForumMessage[]>([
     { id: 1, user: 'Kouassi92', neighborhood: 'Yopougon', text: 'Hôtel La Mahinda vraiment propre pour le prix (2000 f/h). Idéal pour un passage rapide.', time: 'Il y a 2h', rating: 4, hotelId: '1' },
@@ -38,8 +82,10 @@ export default function App() {
   const filteredHotels = useMemo(() => {
     return hotels.filter(hotel => {
       const matchCommune = selectedCommune ? hotel.Commune === selectedCommune : true;
-      const matchPrice = hotel.Prix_Heure_Clim <= maxPrice || hotel.Prix_Heure_Ventile <= maxPrice;
-      const matchAvailability = showOnlyAvailable ? !hotel.isFull : true;
+      // Filter by any available hourly rate that is under the budget
+      const matchPrice = (hotel.Prix_Heure_Clim > 0 && hotel.Prix_Heure_Clim <= maxPrice) || 
+                         (hotel.Prix_Heure_Ventile > 0 && hotel.Prix_Heure_Ventile <= maxPrice);
+      const matchAvailability = showOnlyAvailable ? !hotel.isFull && hotel.Statut_Actuel === 'Ouvert' : true;
       return matchCommune && matchPrice && matchAvailability;
     });
   }, [selectedCommune, maxPrice, showOnlyAvailable]);
@@ -73,46 +119,6 @@ export default function App() {
       }
     }
   };
-
-  // --- REUSABLE NAVBAR ---
-  const Navbar = () => (
-    <nav className="p-6 flex justify-between items-center border-b border-white/5 sticky top-0 bg-zinc-950/80 backdrop-blur-md z-50">
-      <h1 onClick={() => { setPage('home'); setMobileMenuOpen(false); }} className="text-2xl font-black tracking-tighter text-red-600 flex items-center gap-2 cursor-pointer transition-transform active:scale-95">
-        <Lightbulb size={24} className="fill-red-600 text-red-600 drop-shadow-[0_0_8px_rgba(220,38,38,0.8)]" />
-        REDLIGHT
-      </h1>
-      <div className="space-x-8 hidden md:flex items-center text-[10px] uppercase tracking-[0.2em] font-black italic">
-        <button onClick={() => setPage('home')} className={`transition ${page === 'home' ? 'text-red-500' : 'text-zinc-500 hover:text-white'}`}>Accueil</button>
-        <button onClick={() => setPage('map')} className={`transition ${page === 'map' ? 'text-red-500' : 'text-zinc-500 hover:text-white'}`}>La Carte</button>
-        <button onClick={() => setPage('forum')} className={`transition ${page === 'forum' ? 'text-red-500' : 'text-zinc-500 hover:text-white'}`}>Communauté</button>
-        <button onClick={() => setPage('managers')} className={`transition px-4 py-2 rounded border border-white/5 bg-white/5 hover:bg-white/10 ${page === 'managers' ? 'text-red-500 border-red-500/30 bg-red-500/5' : 'text-zinc-500 hover:text-white'}`}>Espace Gérants</button>
-      </div>
-      <button 
-        onClick={() => setMobileMenuOpen(!mobileMenuOpen)} 
-        className="md:hidden text-xs font-black uppercase tracking-widest border border-white/10 px-4 py-2 rounded-lg bg-zinc-900"
-      >
-        {mobileMenuOpen ? 'Fermer' : 'Menu'}
-      </button>
-
-      {/* Mobile Menu Overlay */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="absolute top-full left-0 right-0 bg-zinc-950 border-b border-white/10 p-8 flex flex-col gap-6 md:hidden z-50 shadow-2xl"
-          >
-            <button onClick={() => { setPage('home'); setMobileMenuOpen(false); }} className={`text-left text-xs font-black uppercase tracking-[0.2em] ${page === 'home' ? 'text-red-500' : 'text-zinc-400'}`}>Accueil</button>
-            <button onClick={() => { setPage('map'); setMobileMenuOpen(false); }} className={`text-left text-xs font-black uppercase tracking-[0.2em] ${page === 'map' ? 'text-red-500' : 'text-zinc-400'}`}>La Carte</button>
-            <button onClick={() => { setPage('forum'); setMobileMenuOpen(false); }} className={`text-left text-xs font-black uppercase tracking-[0.2em] ${page === 'forum' ? 'text-red-500' : 'text-zinc-400'}`}>Communauté</button>
-            <button onClick={() => { setPage('managers'); setMobileMenuOpen(false); }} className={`text-left text-xs font-black uppercase tracking-[0.2em] ${page === 'managers' ? 'text-red-500' : 'text-zinc-400'}`}>Espace Gérants</button>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </nav>
-  );
-
   // --- COMPOSANT PAGE D'ACCUEIL ---
   const HomePage = () => {
     const containerVariants = {
@@ -136,8 +142,8 @@ export default function App() {
     };
 
     return (
-      <div className="min-h-screen bg-zinc-950 text-white font-sans overflow-x-hidden">
-        <Navbar />
+      <div className="min-h-screen bg-zinc-950 text-white font-sans overflow-x-hidden border-x-[12px] md:border-x-[24px] border-[#1a1a1a]">
+        <Navbar page={page} setPage={setPage} mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
 
         <motion.main 
           initial="hidden"
@@ -161,7 +167,7 @@ export default function App() {
           
           <motion.h2 
             variants={itemVariants}
-            className="text-6xl md:text-8xl font-black mb-8 tracking-tighter leading-none relative z-10"
+            className="text-5xl md:text-8xl font-black mb-8 tracking-tighter leading-none relative z-10 italic uppercase"
           >
             {"ABIDJAN LA NUIT,".split("").map((char, index) => (
               <motion.span
@@ -202,7 +208,7 @@ export default function App() {
           
           <motion.p 
             variants={itemVariants}
-            className="text-zinc-400 text-lg md:text-xl mb-12 max-w-2xl mx-auto font-medium relative z-10"
+            className="text-zinc-500 text-lg md:text-xl mb-12 max-w-2xl mx-auto font-medium relative z-10 italic"
           >
             Découvrez les meilleurs établissements économiques à Yopougon et partout ailleurs. 
             Une cartographie discrète pour un confort immédiat.
@@ -284,12 +290,12 @@ export default function App() {
     };
 
     return (
-      <div className="min-h-screen flex flex-col bg-zinc-950 text-white font-sans overflow-x-hidden">
-        <Navbar />
+      <div className="min-h-screen flex flex-col bg-zinc-950 text-white font-sans overflow-x-hidden border-x-[12px] md:border-x-[24px] border-[#1a1a1a]">
+        <Navbar page={page} setPage={setPage} mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
 
         <main className="max-w-2xl mx-auto px-6 py-12 w-full flex-1">
           <div className="mb-12 text-center md:text-left">
-            <h2 className="text-4xl font-black mb-2 tracking-tighter uppercase">Communauté</h2>
+            <h2 className="text-4xl font-black mb-2 tracking-tighter uppercase italic text-red-500">Communauté</h2>
             <p className="text-zinc-500 text-sm italic">Échanges discrets entre membres REDLIGHT.</p>
           </div>
 
@@ -430,15 +436,15 @@ export default function App() {
         message = `Bonjour REDLIGHT, je souhaite ajouter mon établissement : ${formData.Nom} | Commune : ${formData.Commune} | Quartier : ${formData.Quartier} | Tarifs : H.Ventilé ${formData.Prix_Heure_Ventile}F, H.Clim ${formData.Prix_Heure_Clim}F, N.Ventilé ${formData.Prix_Nuit_Ventile}F, N.Clim ${formData.Prix_Nuit_Clim}F | Services : ${services.join(', ')}.`;
       }
       
-      const whatsappUrl = `https://wa.me/2250758968403?text=${encodeURIComponent(message)}`;
+      const whatsappUrl = `https://wa.me/${OWNER_WHATSAPP}?text=${encodeURIComponent(message)}`;
       window.open(whatsappUrl, '_blank');
       
       setSubmitted(true);
     };
 
     return (
-      <div className="min-h-screen flex flex-col bg-zinc-950 text-white font-sans overflow-x-hidden">
-        <Navbar />
+      <div className="min-h-screen flex flex-col bg-zinc-950 text-white font-sans overflow-x-hidden border-x-[12px] md:border-x-[24px] border-[#1a1a1a]">
+        <Navbar page={page} setPage={setPage} mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
 
         <main className="max-w-4xl mx-auto px-6 py-16 w-full flex-1">
           <AnimatePresence mode="wait">
@@ -454,8 +460,8 @@ export default function App() {
                   <div className="w-16 h-16 bg-red-600/10 rounded-2xl flex items-center justify-center text-red-600 mx-auto mb-6 border border-red-600/20">
                     <Building2 size={32} />
                   </div>
-                  <h2 className="text-4xl font-black mb-4 tracking-tighter uppercase italic">Espace Partenaires</h2>
-                  <p className="text-zinc-500 max-w-lg mx-auto font-medium">Référencez votre établissement sur la carte <span className="text-red-500 font-black">REDLIGHT</span> pour capter une clientèle locale ciblée.</p>
+                  <h2 className="text-4xl font-black mb-4 tracking-tighter uppercase italic text-red-500">Espace Partenaires</h2>
+                  <p className="text-zinc-500 max-w-lg mx-auto font-medium italic">Référencez votre établissement sur la carte <span className="text-red-500 font-black">REDLIGHT</span> pour capter une clientèle locale ciblée.</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="bg-zinc-900/30 border border-white/5 rounded-[40px] p-8 md:p-12 backdrop-blur-xl shadow-2xl space-y-10">
@@ -494,7 +500,7 @@ export default function App() {
                           onChange={e => setFormData({...formData, Commune: e.target.value})}
                          >
                            <option value="">Sélectionnez une commune</option>
-                           {ALL_ABIDJAN_COMMUNES.map(c => (
+                           {ABIDJAN_COMMUNES.map(c => (
                              <option key={c} value={c}>{c}</option>
                            ))}
                          </select>
@@ -601,7 +607,7 @@ export default function App() {
                   <CheckCircle2 size={48} />
                 </div>
                 <h2 className="text-4xl font-black mb-4 uppercase tracking-tighter">Demande envoyée !</h2>
-                <p className="text-zinc-400 max-w-sm mx-auto mb-10 leading-relaxed font-medium">
+                <p className="text-zinc-400 max-w-sm mx-auto mb-10 leading-relaxed font-medium italic">
                   Merci ! Votre établissement est en cours de vérification. <span className="text-red-500 font-black">REDLIGHT</span> vous répondra sur WhatsApp pour finaliser l'ajout sur la carte officielle.
                 </p>
                 <button 
@@ -628,8 +634,8 @@ export default function App() {
       {page === 'home' && <HomePage />}
       
       {page === 'map' && (
-        <div className="flex-1 flex flex-col overflow-hidden text-[#e5e5e5] font-sans relative">
-          <Navbar />
+        <div className="flex-1 flex flex-col overflow-hidden text-[#e5e5e5] font-sans relative border-x-[12px] md:border-x-[24px] border-[#1a1a1a]">
+          <Navbar page={page} setPage={setPage} mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
           
           <div className="flex-1 flex flex-col md:flex-row relative overflow-hidden">
             {/* Sidebar - Filtres et Liste */}
@@ -677,7 +683,7 @@ export default function App() {
             </button>
 
             {/* Main Content - Map */}
-            <main className="flex-1 relative overflow-hidden bg-zinc-950 min-h-[400px] md:h-full">
+            <main className="flex-1 relative overflow-hidden bg-zinc-950 min-h-[400px] md:h-full border-l border-red-900/10">
               <Map 
                 hotels={filteredHotels} 
                 onHotelClick={setSelectedHotel} 
@@ -726,8 +732,6 @@ export default function App() {
           <span className="max-w-0 overflow-hidden group-hover:max-w-xs group-hover:ml-2 transition-all duration-500 text-[10px] font-black uppercase tracking-widest">Partager</span>
         </button>
       )}
-
-      {/* Pour la page carte, on l'ajoute à côté du bouton de localisation */}
     </div>
   );
 }

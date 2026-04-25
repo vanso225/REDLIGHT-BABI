@@ -3,6 +3,7 @@ import { Hotel } from '../types/hotel';
 import { ForumMessage } from '../types/forum';
 import { motion } from 'motion/react';
 import { X, Wifi, Car, EyeOff, MapPin, Wind, Thermometer, Phone, MessageCircle, Edit, Lightbulb, Star, ExternalLink, Clock, Zap, Moon } from 'lucide-react';
+import { OWNER_WHATSAPP } from '../constants';
 
 interface HotelDetailPanelProps {
   hotel: Hotel;
@@ -20,8 +21,6 @@ const HotelDetailPanel: React.FC<HotelDetailPanelProps> = ({ hotel, onClose, for
   
   const isNew = hotelReviews.length === 0;
 
-  // The platform owner's WhatsApp number
-  const OWNER_WHATSAPP = "2250758968403"; 
   const handleItinerary = () => {
     const url = `https://www.google.com/maps/dir/?api=1&destination=${hotel.Latitude},${hotel.Longitude}`;
     window.open(url, '_blank');
