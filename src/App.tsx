@@ -634,24 +634,35 @@ export default function App() {
       {page === 'home' && <HomePage />}
       
       {page === 'map' && (
-        <div className="h-screen flex flex-col overflow-hidden text-[#e5e5e5] font-sans relative border-x-[12px] md:border-x-[24px] border-[#1a1a1a]">
+        <div className="h-screen flex flex-col overflow-hidden text-[#e5e5e5] font-sans relative">
+          {/* Main Content - Full Screen Map */}
+          <div className="absolute inset-0 z-0">
+            <Map 
+              hotels={filteredHotels} 
+              onHotelClick={setSelectedHotel} 
+              selectedHotel={selectedHotel}
+            />
+          </div>
+
           <Navbar page={page} setPage={setPage} mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
           
-          <div className="flex-1 flex flex-col md:flex-row relative overflow-hidden">
+          <div className="flex-1 relative z-10 pointer-events-none md:flex md:flex-row overflow-hidden">
             {/* Sidebar - Filtres et Liste */}
-            <Sidebar 
-              communes={communes}
-              selectedCommune={selectedCommune}
-              setSelectedCommune={setSelectedCommune}
-              maxPrice={maxPrice}
-              setMaxPrice={setMaxPrice}
-              hotels={filteredHotels}
-              selectedHotel={selectedHotel}
-              onHotelClick={setSelectedHotel}
-            />
+            <div className="pointer-events-auto h-full">
+              <Sidebar 
+                communes={communes}
+                selectedCommune={selectedCommune}
+                setSelectedCommune={setSelectedCommune}
+                maxPrice={maxPrice}
+                setMaxPrice={setMaxPrice}
+                hotels={filteredHotels}
+                selectedHotel={selectedHotel}
+                onHotelClick={setSelectedHotel}
+              />
+            </div>
 
             {/* Boutons Utilitaires Carte */}
-            <div className="absolute top-4 left-4 z-30 flex flex-col gap-2 pointer-events-none">
+            <div className="absolute top-4 left-4 z-30 flex flex-col gap-2">
               <div className="flex gap-2 pointer-events-auto">
                 <button 
                   onClick={() => setPage('home')}
@@ -673,49 +684,33 @@ export default function App() {
               </div>
             </div>
 
-            {/* Bouton Partage Flottant Spécifique Carte */}
-            <button
-              onClick={handleShare}
-              className="absolute bottom-32 md:bottom-10 right-4 z-50 bg-red-600 hover:bg-red-700 text-white p-3.5 rounded-full shadow-2xl transition-all hover:scale-110 active:scale-95 group border border-white/10"
-              title="Partager REDLIGHT"
-            >
-              <Share2 size={24} className="group-hover:rotate-12 transition-transform" />
-            </button>
-
-            {/* Main Content - Map */}
-            <main className="flex-1 relative overflow-hidden bg-zinc-950 border-l border-red-900/10 flex flex-col">
-              <div className="flex-1 min-h-0 relative">
-                <Map 
-                  hotels={filteredHotels} 
-                  onHotelClick={setSelectedHotel} 
-                  selectedHotel={selectedHotel}
-                />
+            <div className="flex-1" />
+            
+            {/* Legend Panel - Desktop Only */}
+            <div className="hidden md:flex absolute top-4 right-4 z-10 bg-black/90 p-2.5 rounded-xl border border-zinc-800 gap-4 text-[9px] uppercase font-black tracking-widest pointer-events-auto">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-red-600 shadow-[0_0_8px_#ff0000]"></div>
+                <span>Ouvert</span>
               </div>
-
-              {/* Legend Panel - Hide on small mobile */}
-              <div className="hidden sm:flex absolute top-4 right-4 z-10 bg-black/90 p-2.5 rounded-xl border border-zinc-800 gap-4 text-[9px] uppercase font-black tracking-widest">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-red-600 shadow-[0_0_8px_#ff0000]"></div>
-                  <span>Ouvert</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-zinc-700"></div>
-                  <span>Fermé</span>
-                </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-zinc-700"></div>
+                <span>Fermé</span>
               </div>
+            </div>
 
-              {/* Detail Panel */}
-              <AnimatePresence>
-                {selectedHotel && (
+            {/* Detail Panel */}
+            <AnimatePresence>
+              {selectedHotel && (
+                <div className="pointer-events-auto">
                   <HotelDetailPanel 
                     hotel={selectedHotel} 
                     onClose={() => setSelectedHotel(null)} 
                     forumMessages={forumMessages}
                     onViewForum={() => setPage('forum')}
                   />
-                )}
-              </AnimatePresence>
-            </main>
+                </div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       )}

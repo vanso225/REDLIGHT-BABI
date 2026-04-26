@@ -99,11 +99,11 @@ const HotelDetailPanel: React.FC<HotelDetailPanelProps> = ({ hotel, onClose, for
           <div className="grid grid-cols-1 gap-2">
             <div className="flex items-center justify-between bg-zinc-900/60 p-3 rounded-xl border border-white/5 hover:border-red-900/20 transition-colors">
               <div className="flex items-center gap-3">
-                <div className="p-1.5 bg-amber-500/10 rounded-lg text-amber-500">
+                <div className="p-1.5 bg-red-500/10 rounded-lg text-red-500">
                   <Zap size={14} fill="currentColor" fillOpacity={0.2} />
                 </div>
                 <div>
-                  <p className="text-[9px] font-black text-zinc-500 uppercase tracking-widest leading-none mb-1">Passage</p>
+                  <p className="text-[9px] font-black text-zinc-500 uppercase tracking-widest leading-none mb-1">⚡ Passage</p>
                   <p className="text-[12px] font-black text-zinc-200">12h00 – 23h00</p>
                 </div>
               </div>
@@ -116,7 +116,7 @@ const HotelDetailPanel: React.FC<HotelDetailPanelProps> = ({ hotel, onClose, for
                   <Moon size={14} fill="currentColor" fillOpacity={0.2} />
                 </div>
                 <div>
-                  <p className="text-[9px] font-black text-zinc-500 uppercase tracking-widest leading-none mb-1">Dormant</p>
+                  <p className="text-[9px] font-black text-zinc-500 uppercase tracking-widest leading-none mb-1">🌙 Dormant</p>
                   <p className="text-[12px] font-black text-zinc-200">23h00 – 12h00</p>
                 </div>
               </div>
