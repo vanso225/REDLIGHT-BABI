@@ -216,22 +216,26 @@ const Sidebar: React.FC<SidebarProps> = ({
 
   const dragControls = useDragControls();
 
+  const variants = {
+    min: { height: heightClasses.min, y: 0 },
+    max: { height: heightClasses.max, y: 0 }
+  };
+
   if (isMobile) {
     return (
       <motion.aside
-        initial={false}
-        animate={{ 
-          height: heightClasses[drawerHeight],
-          y: 0 
-        }}
-        transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+        initial="min"
+        animate={drawerHeight}
+        variants={variants}
+        transition={{ type: 'spring', damping: 30, stiffness: 300 }}
         drag="y"
+        dragConstraints={{ top: 0, bottom: 0 }}
         dragControls={dragControls}
         dragListener={false}
         dragElastic={0.2}
         onDragEnd={(_, info) => {
-          // Determine if we should change state based on the drag velocity and offset
-          const threshold = 50;
+          // If the user drags down by more than 100px, we minimize the drawer
+          const threshold = 100;
           const velocity = info.velocity.y;
           
           if (info.offset.y > threshold || velocity > 500) {
@@ -244,9 +248,9 @@ const Sidebar: React.FC<SidebarProps> = ({
         }}
         className="fixed bottom-0 left-0 right-0 z-[60] bg-zinc-950 border-t border-zinc-800 rounded-t-[32px] shadow-[0_-20px_40px_rgba(0,0,0,0.8)] flex flex-col overflow-hidden"
       >
-        {/* Handle bar - Increased touch area */}
+        {/* Handle bar - High z-index and touch-none for dragging */}
         <div 
-          className="w-full h-12 flex items-center justify-center cursor-grab active:cursor-grabbing border-b border-white/5 shrink-0 touch-none py-4"
+          className="w-full h-14 flex items-center justify-center cursor-grab active:cursor-grabbing border-b border-white/5 shrink-0 touch-none z-[70] py-4"
           onPointerDown={(e) => dragControls.start(e)}
         >
           <div className="w-16 h-1.5 bg-zinc-800 rounded-full" />
