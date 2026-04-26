@@ -1,7 +1,7 @@
 import React from 'react';
 import { Hotel } from '../types/hotel';
 import { motion, AnimatePresence, useDragControls } from 'motion/react';
-import { List } from 'lucide-react';
+import { List, X } from 'lucide-react';
 
 interface SidebarProps {
   communes: string[];
@@ -42,29 +42,60 @@ const Sidebar: React.FC<SidebarProps> = ({
   }, [selectedHotel, isMobile]);
 
   const heightClasses = {
-    min: 'h-[70px]',
-    mid: 'h-[30vh]',
-    max: 'h-[85vh]'
+    min: 'h-[60px]',
+    mid: 'h-[50vh]',
+    max: 'h-[80vh]'
   };
 
   const sidebarContent = (
     <div className="flex flex-col h-full overflow-hidden">
-      <div className="p-6 border-b border-zinc-800 flex justify-between items-center shrink-0">
-        <div>
-          <h1 className="text-2xl font-black tracking-tighter neon-red">REDLIGHT</h1>
-          <p className="text-[10px] text-zinc-500 uppercase tracking-widest mt-1">Abidjan Budget Census</p>
+      {/* Search Header for Mobile - Simplified */}
+      {isMobile && drawerHeight === 'min' ? (
+        <div 
+          onClick={() => setDrawerHeight('mid')} 
+          className="flex items-center justify-between px-6 py-2 cursor-pointer h-full"
+        >
+          <div className="flex items-center gap-3">
+             <h2 className="text-sm font-black tracking-tight text-red-500 uppercase">Hôtels disponibles</h2>
+             <span className="text-[10px] font-bold text-zinc-500 bg-zinc-900 px-2 rounded-full">{hotels.length}</span>
+          </div>
+          <div className="flex items-center gap-4 text-[9px] font-black text-zinc-600 uppercase tracking-widest">
+            <span className="flex items-center gap-1"><div className="w-1.5 h-1.5 bg-red-600 rounded-full" /> Passage</span>
+            <span className="flex items-center gap-1"><div className="w-1.5 h-1.5 bg-blue-600 rounded-full" /> Dormant</span>
+          </div>
         </div>
-        {isMobile && (
-          <button 
-            onClick={() => setDrawerHeight(drawerHeight === 'max' ? 'mid' : 'max')}
-            className="p-2 bg-zinc-900 rounded-full text-zinc-500"
-          >
-            <List size={20} />
-          </button>
-        )}
-      </div>
+      ) : (
+        <>
+          <div className="p-6 border-b border-zinc-800 flex justify-between items-center shrink-0">
+            <div>
+              <h1 className="text-2xl font-black tracking-tighter neon-red">REDLIGHT</h1>
+              <p className="text-[10px] text-zinc-500 uppercase tracking-widest mt-1">Abidjan Budget Census</p>
+            </div>
+            {isMobile && (
+              <button 
+                onClick={() => setDrawerHeight('min')}
+                className="p-2 bg-zinc-900 rounded-full text-zinc-500"
+              >
+                <X size={16} />
+              </button>
+            )}
+          </div>
 
-      <div className="flex-1 p-4 space-y-6 overflow-y-auto custom-scrollbar">
+          <div className="flex-1 p-4 space-y-6 overflow-y-auto custom-scrollbar">
+            {/* Infos Horaires - New for mobile as requested */}
+            {isMobile && (
+              <div className="grid grid-cols-2 gap-2 pb-2 border-b border-white/5">
+                <div className="bg-zinc-900/40 p-2 rounded-lg border border-white/5">
+                  <p className="text-[8px] font-black text-zinc-500 uppercase mb-1">Passage</p>
+                  <p className="text-[10px] font-bold text-zinc-300">12h00 – 23h00</p>
+                </div>
+                <div className="bg-zinc-900/40 p-2 rounded-lg border border-white/5">
+                  <p className="text-[8px] font-black text-zinc-500 uppercase mb-1">Dormant</p>
+                  <p className="text-[10px] font-bold text-zinc-300">23h00 – 12h00</p>
+                </div>
+              </div>
+            )}
+
         {/* Filtres par Commune */}
         <section>
           <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest block mb-3">
@@ -161,6 +192,8 @@ const Sidebar: React.FC<SidebarProps> = ({
           )}
         </section>
       </div>
+      </>
+      )}
     </div>
   );
 
@@ -170,32 +203,42 @@ const Sidebar: React.FC<SidebarProps> = ({
     return (
       <motion.aside
         initial={false}
-        animate={{ height: heightClasses[drawerHeight] }}
-        transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+        animate={{ 
+          height: heightClasses[drawerHeight],
+          y: 0 
+        }}
+        transition={{ type: 'spring', damping: 25, stiffness: 200 }}
         drag="y"
         dragControls={dragControls}
         dragListener={false}
-        dragConstraints={{ top: 0, bottom: 0 }}
-        dragElastic={0.1}
+        dragElastic={0.2}
         onDragEnd={(_, info) => {
-          if (info.offset.y > 50) {
+          // Determine if we should change state based on the drag velocity and offset
+          const threshold = 50;
+          const velocity = info.velocity.y;
+          
+          if (info.offset.y > threshold || velocity > 500) {
+            // Dragged down
             if (drawerHeight === 'max') setDrawerHeight('mid');
             else if (drawerHeight === 'mid') setDrawerHeight('min');
-          } else if (info.offset.y < -50) {
+          } else if (info.offset.y < -threshold || velocity < -500) {
+            // Dragged up
             if (drawerHeight === 'min') setDrawerHeight('mid');
             else if (drawerHeight === 'mid') setDrawerHeight('max');
           }
         }}
-        className="fixed bottom-0 left-0 right-0 z-40 bg-zinc-950 border-t border-zinc-800 rounded-t-[32px] shadow-[0_-20px_40px_rgba(0,0,0,0.5)] flex flex-col overflow-hidden"
+        className="fixed bottom-0 left-0 right-0 z-[60] bg-zinc-950 border-t border-zinc-800 rounded-t-[32px] shadow-[0_-20px_40px_rgba(0,0,0,0.8)] flex flex-col overflow-hidden"
       >
-        {/* Handle bar - Using dragControls to trigger drawer drag */}
+        {/* Handle bar - Increased touch area */}
         <div 
-          className="w-full h-10 flex items-center justify-center cursor-grab active:cursor-grabbing border-b border-white/5 shrink-0 touch-none"
+          className="w-full h-12 flex items-center justify-center cursor-grab active:cursor-grabbing border-b border-white/5 shrink-0 touch-none py-4"
           onPointerDown={(e) => dragControls.start(e)}
         >
-          <div className="w-12 h-1.5 bg-zinc-800 rounded-full" />
+          <div className="w-16 h-1.5 bg-zinc-800 rounded-full" />
         </div>
-        {sidebarContent}
+        <div className="flex-1 overflow-hidden">
+          {sidebarContent}
+        </div>
       </motion.aside>
     );
   }

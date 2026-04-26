@@ -185,8 +185,8 @@ const Map: React.FC<MapProps> = ({ hotels, onHotelClick, selectedHotel }) => {
   };
 
   return (
-    <div className="relative w-full h-full">
-      <div ref={mapContainerRef} className="w-full h-full" />
+    <div className="absolute inset-0 w-full h-full">
+      <div ref={mapContainerRef} className="absolute inset-0 w-full h-full" />
       
       {tokenError && (
         <div className="absolute inset-0 z-50 flex items-center justify-center bg-zinc-950/90 backdrop-blur-sm p-8 text-center">
