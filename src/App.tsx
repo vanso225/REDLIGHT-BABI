@@ -71,7 +71,7 @@ export default function App() {
   const [selectedHotel, setSelectedHotel] = useState<Hotel | null>(null);
   const [selectedCommune, setSelectedCommune] = useState<string | null>(null);
   const [maxPrice, setMaxPrice] = useState<number>(6000); // Default to a reasonable passage budget
-  const [showOnlyAvailable, setShowOnlyAvailable] = useState<boolean>(true); // Default to true for better UX
+  const [showOnlyAvailable, setShowOnlyAvailable] = useState<boolean>(false); // Show all by default as requested
   
   const [forumMessages, setForumMessages] = useState<ForumMessage[]>([
     { id: 1, user: 'Kouassi92', neighborhood: 'Yopougon', text: 'Hôtel La Mahinda vraiment propre pour le prix (2000 f/h). Idéal pour un passage rapide.', time: 'Il y a 2h', rating: 4, hotelId: '1' },

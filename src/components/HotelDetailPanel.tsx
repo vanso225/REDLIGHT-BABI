@@ -32,7 +32,7 @@ const HotelDetailPanel: React.FC<HotelDetailPanelProps> = ({ hotel, onClose, for
       animate={{ x: 0, y: 0 }}
       exit={{ x: '100%', y: 0 }}
       transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-      className="fixed md:absolute right-0 top-0 bottom-0 w-full md:w-80 glass p-6 shadow-2xl z-50 flex flex-col overflow-y-auto"
+      className="fixed md:absolute right-0 top-0 bottom-0 w-full md:w-80 glass p-6 shadow-2xl z-[100] flex flex-col overflow-y-auto"
     >
       <button 
         onClick={onClose}

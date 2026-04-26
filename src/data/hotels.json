@@ -1,5 +1,5 @@
 [
-  {
+    {
     "id": "1",
     "Nom": "La Mahinda",
     "Commune": "Yopougon",
@@ -32,7 +32,7 @@
     "Parking": false,
     "Discret_Entree": true,
     "Statut_Actuel": "Ouvert",
-    "isFull": true,
+    "isFull": false,
     "Telephone": "0101010101"
   },
   {
@@ -86,7 +86,7 @@
     "Parking": false,
     "Discret_Entree": true,
     "Statut_Actuel": "Ouvert",
-    "isFull": true,
+    "isFull": false,
     "Telephone": "0102030405"
   },
   {

@@ -126,7 +126,8 @@ const Map: React.FC<MapProps> = ({ hotels, onHotelClick, selectedHotel }) => {
         bulbStatus = 'bulb-off';
       }
 
-      el.className = `bulb ${bulbStatus} ${selectedHotel?.id === hotel.id ? 'scale-150 drop-shadow-[0_0_15px_rgba(220,38,38,1)] z-30' : ''}`;
+      el.className = `bulb ${bulbStatus} ${selectedHotel?.id === hotel.id ? 'scale-150 drop-shadow-[0_0_20px_rgba(220,38,38,1)] z-[40]' : 'z-10'}`;
+      el.style.pointerEvents = 'auto'; // Ensure they are always clickable
       
       // Inject Lightbulb SVG (manually for speed and compatibility in vanilla Mapbox Marker)
       el.innerHTML = `

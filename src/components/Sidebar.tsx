@@ -217,8 +217,8 @@ const Sidebar: React.FC<SidebarProps> = ({
   const dragControls = useDragControls();
 
   const variants = {
-    min: { height: heightClasses.min, y: 0 },
-    max: { height: heightClasses.max, y: 0 }
+    min: { height: heightClasses.min, y: 0, transition: { type: 'spring', damping: 25, stiffness: 200 } },
+    max: { height: heightClasses.max, y: 0, transition: { type: 'spring', damping: 30, stiffness: 300 } }
   };
 
   if (isMobile) {
@@ -227,7 +227,6 @@ const Sidebar: React.FC<SidebarProps> = ({
         initial="min"
         animate={drawerHeight}
         variants={variants}
-        transition={{ type: 'spring', damping: 30, stiffness: 300 }}
         drag="y"
         dragConstraints={{ top: 0, bottom: 0 }}
         dragControls={dragControls}
