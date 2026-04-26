@@ -33,7 +33,7 @@ const Navbar = ({
       <Lightbulb size={24} className="fill-red-600 text-red-600 drop-shadow-[0_0_8px_rgba(220,38,38,0.8)]" />
       REDLIGHT
     </h1>
-    <div className="space-x-8 hidden md:flex items-center text-[10px] uppercase tracking-[0.2em] font-black italic">
+    <div id="desktop-nav" className="space-x-8 hidden md:flex items-center text-[10px] uppercase tracking-[0.2em] font-black italic">
       <button onClick={() => setPage('home')} className={`transition ${page === 'home' ? 'text-red-500' : 'text-zinc-500 hover:text-white'}`}>Accueil</button>
       <button onClick={() => setPage('map')} className={`transition ${page === 'map' ? 'text-red-500' : 'text-zinc-500 hover:text-white'}`}>La Carte</button>
       <button onClick={() => setPage('forum')} className={`transition ${page === 'forum' ? 'text-red-500' : 'text-zinc-500 hover:text-white'}`}>Communauté</button>
@@ -64,6 +64,7 @@ const Navbar = ({
   </nav>
 );
 
+// REDLIGHT Abidjan - Updated deployment config
 export default function App() {
   const [page, setPage] = useState<'home' | 'map' | 'forum' | 'managers'>('home');
   const [selectedHotel, setSelectedHotel] = useState<Hotel | null>(null);
