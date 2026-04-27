@@ -5,7 +5,7 @@
  */
 
 import React, { useState, useMemo } from 'react';
-import { Map as MapIcon, MessageSquare, Home, Navigation, ShieldCheck, Star, Building2, CheckCircle2, Lightbulb, Share2 } from 'lucide-react';
+import { Map as MapIcon, MessageSquare, Home, Navigation, ShieldCheck, Star, Building2, CheckCircle2, Lightbulb, Share2, Search, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import Map from './components/Map';
 import Sidebar from './components/Sidebar';
@@ -72,6 +72,7 @@ export default function App() {
   const [selectedCommune, setSelectedCommune] = useState<string | null>(null);
   const [maxPrice, setMaxPrice] = useState<number>(6000); // Default to a reasonable passage budget
   const [showOnlyAvailable, setShowOnlyAvailable] = useState<boolean>(false); // Show all by default as requested
+  const [searchQuery, setSearchQuery] = useState<string>('');
   
   const [forumMessages, setForumMessages] = useState<ForumMessage[]>([
     { id: 1, user: 'Kouassi92', neighborhood: 'Yopougon', text: 'Hôtel La Mahinda vraiment propre pour le prix (2000 f/h). Idéal pour un passage rapide.', time: 'Il y a 2h', rating: 4, hotelId: '1' },
@@ -88,9 +89,16 @@ export default function App() {
       const matchPrice = (hotel.Prix_Heure_Clim > 0 && hotel.Prix_Heure_Clim <= maxPrice) || 
                          (hotel.Prix_Heure_Ventile > 0 && hotel.Prix_Heure_Ventile <= maxPrice);
       const matchAvailability = showOnlyAvailable ? !hotel.isFull && hotel.Statut_Actuel === 'Ouvert' : true;
-      return matchCommune && matchPrice && matchAvailability;
+      
+      const searchLower = searchQuery.toLowerCase().trim();
+      const matchSearch = searchLower === '' || 
+                          hotel.Nom.toLowerCase().includes(searchLower) || 
+                          hotel.Commune.toLowerCase().includes(searchLower) ||
+                          (hotel.Quartier && hotel.Quartier.toLowerCase().includes(searchLower));
+      
+      return matchCommune && matchPrice && matchAvailability && matchSearch;
     });
-  }, [selectedCommune, maxPrice, showOnlyAvailable]);
+  }, [selectedCommune, maxPrice, showOnlyAvailable, searchQuery]);
 
   const communes = useMemo(() => {
     return Array.from(new Set(hotels.map(h => h.Commune))).sort();
@@ -660,7 +668,31 @@ export default function App() {
                 hotels={filteredHotels}
                 selectedHotel={selectedHotel}
                 onHotelClick={setSelectedHotel}
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
               />
+            </div>
+
+            {/* Global Search Bar - Floating over Map */}
+            <div className="absolute top-20 left-1/2 -translate-x-1/2 z-30 w-full max-w-md px-4 pointer-events-auto">
+              <div className="relative group">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 group-focus-within:text-red-500 transition-colors" size={18} />
+                <input 
+                  type="text"
+                  placeholder="Hôtel, quartier..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full bg-white/90 backdrop-blur-md border border-zinc-200 rounded-2xl py-3 pl-12 pr-12 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-red-500 shadow-2xl transition-all"
+                />
+                {searchQuery && (
+                  <button 
+                    onClick={() => setSearchQuery('')}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 transition-colors"
+                  >
+                    <X size={18} />
+                  </button>
+                )}
+              </div>
             </div>
 
             {/* Boutons Utilitaires Carte */}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Hotel } from '../types/hotel';
 import { motion, AnimatePresence, useDragControls } from 'motion/react';
-import { List, X } from 'lucide-react';
+import { List, X, Search } from 'lucide-react';
 
 interface SidebarProps {
   communes: string[];
@@ -12,6 +12,8 @@ interface SidebarProps {
   hotels: Hotel[];
   selectedHotel: Hotel | null;
   onHotelClick: (hotel: Hotel) => void;
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
@@ -23,6 +25,8 @@ const Sidebar: React.FC<SidebarProps> = ({
   hotels,
   selectedHotel,
   onHotelClick,
+  searchQuery,
+  setSearchQuery,
 }) => {
   const [drawerHeight, setDrawerHeight] = React.useState<'min' | 'max'>('min');
   const [isMobile, setIsMobile] = React.useState(false);
@@ -98,6 +102,26 @@ const Sidebar: React.FC<SidebarProps> = ({
           </div>
 
           <div className="flex-1 p-4 space-y-6 overflow-y-auto custom-scrollbar">
+            {/* Search Bar - Global Search Integrated into Sidebar */}
+            <div className="relative group mb-2">
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500 group-focus-within:text-red-500 transition-colors" size={16} />
+              <input 
+                type="text"
+                placeholder="Chercher hôtel, quartier..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full bg-zinc-900 border border-zinc-800 rounded-xl py-2.5 pl-10 pr-10 text-xs text-white placeholder:text-zinc-600 focus:outline-none focus:border-red-600 transition-all shadow-lg shadow-black/20"
+              />
+              {searchQuery && (
+                <button 
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-600 hover:text-zinc-400 transition-colors"
+                >
+                  <X size={14} />
+                </button>
+              )}
+            </div>
+
             {/* Infos Horaires - New for mobile as requested */}
             {isMobile && (
               <div className="grid grid-cols-2 gap-2 pb-2 border-b border-white/5">
@@ -216,9 +240,9 @@ const Sidebar: React.FC<SidebarProps> = ({
 
   const dragControls = useDragControls();
 
-  const variants = {
-    min: { height: heightClasses.min, y: 0, transition: { type: 'spring', damping: 25, stiffness: 200 } },
-    max: { height: heightClasses.max, y: 0, transition: { type: 'spring', damping: 30, stiffness: 300 } }
+  const drawerVariants = {
+    min: { y: 'calc(100% - 70px)' },
+    max: { y: 0 }
   };
 
   if (isMobile) {
@@ -226,31 +250,25 @@ const Sidebar: React.FC<SidebarProps> = ({
       <motion.aside
         initial="min"
         animate={drawerHeight}
-        variants={variants}
+        variants={drawerVariants}
+        transition={{ type: 'spring', damping: 25, stiffness: 200 }}
         drag="y"
         dragConstraints={{ top: 0, bottom: 0 }}
-        dragControls={dragControls}
-        dragListener={false}
-        dragElastic={0.2}
+        dragElastic={0.1}
         onDragEnd={(_, info) => {
-          // If the user drags down by more than 100px, we minimize the drawer
-          const threshold = 100;
-          const velocity = info.velocity.y;
-          
-          if (info.offset.y > threshold || velocity > 500) {
-            // Dragged down
+          if (info.offset.y > 100) {
             setDrawerHeight('min');
-          } else if (info.offset.y < -threshold || velocity < -500) {
-            // Dragged up
+          } else if (info.offset.y < -100) {
             setDrawerHeight('max');
           }
         }}
-        className="fixed bottom-0 left-0 right-0 z-[60] bg-zinc-950 border-t border-zinc-800 rounded-t-[32px] shadow-[0_-20px_40px_rgba(0,0,0,0.8)] flex flex-col overflow-hidden"
+        className="fixed bottom-0 left-0 right-0 z-[999] bg-zinc-950 border-t border-zinc-800 rounded-t-[32px] shadow-[0_-20px_40px_rgba(0,0,0,0.8)] flex flex-col overflow-hidden h-[70vh]"
       >
-        {/* Handle bar - High z-index and touch-none for dragging */}
+        {/* Handle bar - High z-index, touch-none, and clickable to toggle */}
         <div 
           className="w-full h-14 flex items-center justify-center cursor-grab active:cursor-grabbing border-b border-white/5 shrink-0 touch-none z-[70] py-4"
           onPointerDown={(e) => dragControls.start(e)}
+          onClick={() => setDrawerHeight(prev => prev === 'min' ? 'max' : 'min')}
         >
           <div className="w-16 h-1.5 bg-zinc-800 rounded-full" />
         </div>
