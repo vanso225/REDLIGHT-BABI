@@ -10,6 +10,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import Map from './components/Map';
 import Sidebar from './components/Sidebar';
 import HotelDetailPanel from './components/HotelDetailPanel';
+import SubmitHotelModal from './components/SubmitHotelModal';
 import hotelsData from './data/hotels.json';
 import { Hotel } from './types/hotel';
 import { ForumMessage } from './types/forum';
@@ -73,6 +74,7 @@ export default function App() {
   const [maxPrice, setMaxPrice] = useState<number>(6000); // Default to a reasonable passage budget
   const [showOnlyAvailable, setShowOnlyAvailable] = useState<boolean>(false); // Show all by default as requested
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
   
   const [forumMessages, setForumMessages] = useState<ForumMessage[]>([
     { id: 1, user: 'Kouassi92', neighborhood: 'Yopougon', text: 'Hôtel La Mahinda vraiment propre pour le prix (2000 f/h). Idéal pour un passage rapide.', time: 'Il y a 2h', rating: 4, hotelId: '1' },
@@ -670,29 +672,8 @@ export default function App() {
                 onHotelClick={setSelectedHotel}
                 searchQuery={searchQuery}
                 setSearchQuery={setSearchQuery}
+                onOpenSubmitModal={() => setIsSubmitModalOpen(true)}
               />
-            </div>
-
-            {/* Global Search Bar - Floating over Map */}
-            <div className="absolute top-20 left-1/2 -translate-x-1/2 z-30 w-full max-w-md px-4 pointer-events-auto">
-              <div className="relative group">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 group-focus-within:text-red-500 transition-colors" size={18} />
-                <input 
-                  type="text"
-                  placeholder="Hôtel, quartier..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-white/90 backdrop-blur-md border border-zinc-200 rounded-2xl py-3 pl-12 pr-12 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-red-500 shadow-2xl transition-all"
-                />
-                {searchQuery && (
-                  <button 
-                    onClick={() => setSearchQuery('')}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 transition-colors"
-                  >
-                    <X size={18} />
-                  </button>
-                )}
-              </div>
             </div>
 
             {/* Boutons Utilitaires Carte */}
@@ -751,6 +732,11 @@ export default function App() {
 
       {page === 'forum' && <ForumPage />}
       {page === 'managers' && <ManagersPage />}
+
+      <SubmitHotelModal 
+        isOpen={isSubmitModalOpen} 
+        onClose={() => setIsSubmitModalOpen(false)} 
+      />
 
       {/* Bouton de Partage Flottant - Visible partout sauf sur la carte (où il y a déjà beaucoup de boutons) */}
       {page !== 'map' && (

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Hotel } from '../types/hotel';
 import { motion, AnimatePresence, useDragControls } from 'motion/react';
-import { List, X, Search } from 'lucide-react';
+import { List, X, Search, Plus } from 'lucide-react';
 
 interface SidebarProps {
   communes: string[];
@@ -14,6 +14,7 @@ interface SidebarProps {
   onHotelClick: (hotel: Hotel) => void;
   searchQuery: string;
   setSearchQuery: (query: string) => void;
+  onOpenSubmitModal: () => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
@@ -27,6 +28,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   onHotelClick,
   searchQuery,
   setSearchQuery,
+  onOpenSubmitModal,
 }) => {
   const [drawerHeight, setDrawerHeight] = React.useState<'min' | 'max'>('min');
   const [isMobile, setIsMobile] = React.useState(false);
@@ -101,27 +103,29 @@ const Sidebar: React.FC<SidebarProps> = ({
             </div>
           </div>
 
-          <div className="flex-1 p-4 space-y-6 overflow-y-auto custom-scrollbar">
-            {/* Search Bar - Global Search Integrated into Sidebar */}
-            <div className="relative group mb-2">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500 group-focus-within:text-red-500 transition-colors" size={16} />
+          {/* Sticky Search Bar - Top of Menu */}
+          <div className="sticky top-0 z-20 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-800/50 p-4 shrink-0">
+            <div className="relative group">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-600 group-focus-within:text-red-500 transition-colors" size={18} />
               <input 
                 type="text"
-                placeholder="Chercher hôtel, quartier..."
+                placeholder="Rechercher un hôtel ou un quartier..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-zinc-900 border border-zinc-800 rounded-xl py-2.5 pl-10 pr-10 text-xs text-white placeholder:text-zinc-600 focus:outline-none focus:border-red-600 transition-all shadow-lg shadow-black/20"
+                className="w-full bg-zinc-900 border border-red-900/20 rounded-2xl py-3.5 pl-12 pr-12 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-red-600 shadow-2xl transition-all"
               />
               {searchQuery && (
                 <button 
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-600 hover:text-zinc-400 transition-colors"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-600 hover:text-zinc-400 transition-colors"
                 >
-                  <X size={14} />
+                  <X size={18} />
                 </button>
               )}
             </div>
+          </div>
 
+          <div className="flex-1 p-4 space-y-6 overflow-y-auto custom-scrollbar">
             {/* Infos Horaires - New for mobile as requested */}
             {isMobile && (
               <div className="grid grid-cols-2 gap-2 pb-2 border-b border-white/5">
@@ -231,6 +235,19 @@ const Sidebar: React.FC<SidebarProps> = ({
               Aucun hôtel trouvé pour ces critères.
             </div>
           )}
+
+          <div className="pt-4 pb-8">
+            <button 
+              onClick={onOpenSubmitModal}
+              className="w-full py-4 bg-zinc-900/50 hover:bg-zinc-800 border border-zinc-800 rounded-2xl text-[10px] font-black uppercase tracking-widest text-zinc-400 hover:text-white transition-all active:scale-[0.98] flex items-center justify-center gap-3"
+            >
+              <Plus size={16} />
+              Proposer un établissement
+            </button>
+            <p className="text-[8px] text-zinc-700 text-center mt-3 uppercase font-bold tracking-tight">
+              Aidez la communauté à rester à jour
+            </p>
+          </div>
         </section>
       </div>
       </>
