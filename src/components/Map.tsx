@@ -126,16 +126,20 @@ const Map: React.FC<MapProps> = ({ hotels, onHotelClick, selectedHotel }) => {
         bulbStatus = 'bulb-off';
       }
 
-      el.className = `bulb ${bulbStatus} ${selectedHotel?.id === hotel.id ? 'scale-150 drop-shadow-[0_0_20px_rgba(220,38,38,1)] z-[40]' : 'z-10'}`;
-      el.style.pointerEvents = 'auto'; // Ensure they are always clickable
+      el.className = `bulb ${bulbStatus} ${selectedHotel?.id === hotel.id ? 'scale-150 drop-shadow-[0_0_20px_rgba(220,38,38,1)] z-[100]' : 'z-50'}`;
+      el.style.pointerEvents = 'auto';
+      el.style.cursor = 'pointer';
+      el.style.zIndex = selectedHotel?.id === hotel.id ? '100' : '50';
       
       // Inject Lightbulb SVG (manually for speed and compatibility in vanilla Mapbox Marker)
       el.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="${hotel.isFull ? 'transparent' : 'currentColor'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lightbulb">
-          <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A5 5 0 0 0 8 8c0 1.3.5 2.6 1.5 3.5.8.8 1.3 1.5 1.5 2.5"/>
-          <path d="M9 18h6"/>
-          <path d="M10 22h4"/>
-        </svg>
+        <div style="pointer-events: none;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="${hotel.isFull ? 'transparent' : 'currentColor'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lightbulb">
+            <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A5 5 0 0 0 8 8c0 1.3.5 2.6 1.5 3.5.8.8 1.3 1.5 1.5 2.5"/>
+            <path d="M9 18h6"/>
+            <path d="M10 22h4"/>
+          </svg>
+        </div>
       `;
       
       const marker = new mapboxgl.Marker({

@@ -40,10 +40,10 @@ const Sidebar: React.FC<SidebarProps> = ({
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Auto-reduce on hotel selection on mobile
+  // Auto-expand on hotel selection on mobile to show details
   React.useEffect(() => {
     if (selectedHotel && isMobile) {
-      setDrawerHeight('min');
+      setDrawerHeight('max');
     }
   }, [selectedHotel, isMobile]);
 
@@ -78,7 +78,6 @@ const Sidebar: React.FC<SidebarProps> = ({
           <div className="p-6 border-b border-zinc-800 flex justify-between items-center shrink-0">
             <div>
               <h1 className="text-2xl font-black tracking-tighter neon-red">REDLIGHT</h1>
-              <p className="text-[10px] text-zinc-500 uppercase tracking-widest mt-1">Abidjan Budget Census</p>
             </div>
             <div className="flex items-center gap-2">
               <a 
@@ -279,18 +278,20 @@ const Sidebar: React.FC<SidebarProps> = ({
             setDrawerHeight('max');
           }
         }}
-        className="fixed bottom-0 left-0 right-0 z-[999] bg-zinc-950 border-t border-zinc-800 rounded-t-[32px] shadow-[0_-20px_40px_rgba(0,0,0,0.8)] flex flex-col overflow-hidden h-[70vh]"
+        className="fixed bottom-0 left-0 right-0 z-[999] pointer-events-none h-[70vh]"
       >
-        {/* Handle bar - High z-index, touch-none, and clickable to toggle */}
-        <div 
-          className="w-full h-14 flex items-center justify-center cursor-grab active:cursor-grabbing border-b border-white/5 shrink-0 touch-none z-[70] py-4"
-          onPointerDown={(e) => dragControls.start(e)}
-          onClick={() => setDrawerHeight(prev => prev === 'min' ? 'max' : 'min')}
-        >
-          <div className="w-16 h-1.5 bg-zinc-800 rounded-full" />
-        </div>
-        <div className="flex-1 overflow-hidden">
-          {sidebarContent}
+        <div className="flex flex-col h-full bg-zinc-950 border-t border-zinc-800 rounded-t-[32px] shadow-[0_-20px_40px_rgba(0,0,0,0.8)] overflow-hidden pointer-events-auto">
+          {/* Handle bar - High z-index, touch-none, and clickable to toggle */}
+          <div 
+            className="w-full h-14 flex items-center justify-center cursor-grab active:cursor-grabbing border-b border-white/5 shrink-0 touch-none z-[70] py-4"
+            onPointerDown={(e) => dragControls.start(e)}
+            onClick={() => setDrawerHeight(prev => prev === 'min' ? 'max' : 'min')}
+          >
+            <div className="w-16 h-1.5 bg-zinc-800 rounded-full" />
+          </div>
+          <div className="flex-1 overflow-hidden">
+            {sidebarContent}
+          </div>
         </div>
       </motion.aside>
     );
