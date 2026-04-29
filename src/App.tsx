@@ -269,7 +269,7 @@ export default function App() {
     };
 
     return (
-      <div className="min-h-screen flex flex-col bg-zinc-950 text-white font-sans overflow-x-hidden border-x-[12px] md:border-x-[24px] border-[#1a1a1a]">
+      <div className="min-h-screen flex flex-col bg-zinc-950 text-white font-sans border-x-[12px] md:border-x-[24px] border-[#1a1a1a]">
         <Navbar page={page} setPage={setPage} mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
 
         <main className="max-w-2xl mx-auto px-6 py-12 w-full flex-1">
@@ -422,7 +422,7 @@ export default function App() {
     };
 
     return (
-      <div className="min-h-screen flex flex-col bg-zinc-950 text-white font-sans overflow-x-hidden border-x-[12px] md:border-x-[24px] border-[#1a1a1a]">
+      <div className="min-h-screen flex flex-col bg-zinc-950 text-white font-sans border-x-[12px] md:border-x-[24px] border-[#1a1a1a]">
         <Navbar page={page} setPage={setPage} mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
 
         <main className="max-w-4xl mx-auto px-6 py-16 w-full flex-1">
@@ -649,7 +649,7 @@ export default function App() {
             </div>
 
             {/* Boutons Utilitaires Carte */}
-            <div className="absolute top-6 left-6 md:left-[312px] z-30 flex flex-col gap-2">
+            <div className="absolute top-6 left-6 md:top-24 md:right-8 md:left-auto z-30 flex flex-col items-end gap-3">
               <div className="flex gap-2 pointer-events-auto">
                 <button 
                   onClick={() => setPage('home')}
