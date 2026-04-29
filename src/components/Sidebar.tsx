@@ -80,6 +80,13 @@ const Sidebar: React.FC<SidebarProps> = ({
               <h1 className="text-2xl font-black tracking-tighter neon-red">REDLIGHT</h1>
             </div>
             <div className="flex items-center gap-2">
+              <button 
+                onClick={onOpenSubmitModal}
+                className="p-2 bg-[#e11d48]/10 text-[#e11d48] rounded-full hover:bg-[#e11d48]/20 transition-colors border border-[#e11d48]/20"
+                title="Proposer un établissement"
+              >
+                <Plus size={18} />
+              </button>
               <a 
                 href={whatsappShareUrl}
                 target="_blank"
@@ -103,20 +110,20 @@ const Sidebar: React.FC<SidebarProps> = ({
           </div>
 
           {/* Sticky Search Bar - Top of Menu */}
-          <div className="sticky top-0 z-20 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-800/50 p-4 shrink-0">
+          <div className="sticky top-0 z-20 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-800/50 p-6 shrink-0">
             <div className="relative group">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-600 group-focus-within:text-red-500 transition-colors" size={18} />
+              <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-zinc-600 group-focus-within:text-[#e11d48] transition-colors" size={20} />
               <input 
                 type="text"
                 placeholder="Rechercher un hôtel ou un quartier..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-zinc-900 border border-red-900/20 rounded-2xl py-3.5 pl-12 pr-12 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-red-600 shadow-2xl transition-all"
+                className="w-full bg-[#1a1a1a] border border-[#e11d48]/20 rounded-[12px] py-4 pl-14 pr-12 text-sm text-white placeholder:text-zinc-700 focus:outline-none focus:ring-2 focus:ring-[#e11d48]/50 focus:border-[#e11d48] shadow-2xl transition-all"
               />
               {searchQuery && (
                 <button 
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-600 hover:text-zinc-400 transition-colors"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-600 hover:text-white transition-colors"
                 >
                   <X size={18} />
                 </button>
@@ -124,15 +131,15 @@ const Sidebar: React.FC<SidebarProps> = ({
             </div>
           </div>
 
-          <div className="flex-1 p-4 space-y-6 overflow-y-auto custom-scrollbar">
+          <div className="flex-1 p-6 space-y-8 overflow-y-auto custom-scrollbar">
             {/* Infos Horaires - New for mobile as requested */}
             {isMobile && (
-              <div className="grid grid-cols-2 gap-2 pb-2 border-b border-white/5">
-                <div className="bg-zinc-900/40 p-2 rounded-lg border border-white/5">
+              <div className="grid grid-cols-2 gap-3 pb-4 border-b border-white/5">
+                <div className="bg-[#1a1a1a] p-3 rounded-[12px] border border-white/5">
                   <p className="text-[8px] font-black text-zinc-500 uppercase mb-1">⚡ Passage</p>
                   <p className="text-[10px] font-bold text-zinc-300">12h00 – 23h00</p>
                 </div>
-                <div className="bg-zinc-900/40 p-2 rounded-lg border border-white/5">
+                <div className="bg-[#1a1a1a] p-3 rounded-[12px] border border-white/5">
                   <p className="text-[8px] font-black text-zinc-500 uppercase mb-1">🌙 Dormant</p>
                   <p className="text-[10px] font-bold text-zinc-300">23h00 – 12h00</p>
                 </div>
@@ -141,13 +148,13 @@ const Sidebar: React.FC<SidebarProps> = ({
 
         {/* Filtres par Commune */}
         <section>
-          <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest block mb-3">
+          <label className="text-[10px] font-black text-zinc-500 uppercase tracking-[0.2em] block mb-4">
             Filtres Commune
           </label>
-          <div className="grid grid-cols-2 gap-2 text-xs">
+          <div className="grid grid-cols-2 gap-3 text-[10px] font-black uppercase tracking-widest">
             <button 
               onClick={() => setSelectedCommune(null)}
-              className={`p-2 rounded text-left transition-all ${!selectedCommune ? 'border border-red-900/50 bg-red-950/20 text-red-500' : 'bg-zinc-900 border border-zinc-800 hover:border-red-600'}`}
+              className={`p-3 rounded-[10px] text-left transition-all border ${!selectedCommune ? 'border-[#e11d48] bg-[#e11d48]/10 text-white' : 'bg-[#1a1a1a] border-zinc-800 text-zinc-500 hover:border-zinc-700'}`}
             >
               Toutes
             </button>
@@ -155,7 +162,7 @@ const Sidebar: React.FC<SidebarProps> = ({
               <button
                 key={commune}
                 onClick={() => setSelectedCommune(commune)}
-                className={`p-2 rounded text-left transition-all ${selectedCommune === commune ? 'border border-red-900/50 bg-red-950/20 text-red-500 font-bold' : 'bg-zinc-900 border border-zinc-800 hover:border-red-600'}`}
+                className={`p-3 rounded-[10px] text-left transition-all border ${selectedCommune === commune ? 'border-[#e11d48] bg-[#e11d48]/10 text-white' : 'bg-[#1a1a1a] border-zinc-800 text-zinc-500 hover:border-zinc-700'}`}
               >
                 {commune}
               </button>
@@ -235,16 +242,16 @@ const Sidebar: React.FC<SidebarProps> = ({
             </div>
           )}
 
-          <div className="pt-4 pb-8">
+          <div className="pt-6 pb-12">
             <button 
               onClick={onOpenSubmitModal}
-              className="w-full py-4 bg-zinc-900/50 hover:bg-zinc-800 border border-zinc-800 rounded-2xl text-[10px] font-black uppercase tracking-widest text-zinc-400 hover:text-white transition-all active:scale-[0.98] flex items-center justify-center gap-3"
+              className="w-full py-5 bg-[#e11d48] hover:bg-[#be123c] text-white rounded-[12px] text-[10px] font-black uppercase tracking-[0.2em] transition-all shadow-xl shadow-[#e11d48]/20 active:scale-[0.98] flex items-center justify-center gap-3 group"
             >
-              <Plus size={16} />
+              <Plus size={18} className="group-hover:rotate-90 transition-transform duration-300" />
               Proposer un établissement
             </button>
-            <p className="text-[8px] text-zinc-700 text-center mt-3 uppercase font-bold tracking-tight">
-              Aidez la communauté à rester à jour
+            <p className="text-[9px] text-zinc-600 text-center mt-4 uppercase font-bold tracking-[0.1em] italic">
+              Contribuez à la mise à jour des prix à Abidjan
             </p>
           </div>
         </section>

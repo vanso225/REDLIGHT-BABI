@@ -274,13 +274,13 @@ export default function App() {
 
         <main className="max-w-2xl mx-auto px-6 py-12 w-full flex-1">
           <div className="mb-12 text-center md:text-left">
-            <h2 className="text-4xl font-black mb-2 tracking-tighter uppercase italic text-red-500">Communauté</h2>
-            <p className="text-zinc-500 text-sm italic">Échanges discrets entre membres REDLIGHT.</p>
+            <h2 className="text-5xl font-bebas mb-2 tracking-tight uppercase text-[#e11d48]">Communauté</h2>
+            <p className="text-zinc-500 text-base font-medium italic">Échanges discrets entre membres REDLIGHT.</p>
           </div>
 
           {/* Formulaire d'envoi */}
           <form onSubmit={handlePublish} className="mb-12 space-y-6">
-            <div className="bg-zinc-900/40 p-6 rounded-3xl border border-white/5 space-y-6 backdrop-blur-sm">
+            <div className="bg-[#1a1a1a]/40 p-8 rounded-[24px] border border-[#e11d48]/10 space-y-8 backdrop-blur-md">
               <div className="flex flex-col items-center md:items-start gap-4">
                 <label className="text-[10px] font-black text-zinc-500 uppercase tracking-[0.2em]">Votre Note</label>
                 <div className="flex gap-2">
@@ -294,9 +294,9 @@ export default function App() {
                       className="transition-transform active:scale-90 hover:scale-110"
                     >
                       <Star 
-                        size={28} 
+                        size={32} 
                         fill={(hoverRating || rating) >= star ? "#fbbf24" : "transparent"} 
-                        className={(hoverRating || rating) >= star ? "text-amber-400 drop-shadow-[0_0_8px_rgba(251,191,36,0.3)]" : "text-zinc-700"}
+                        className={(hoverRating || rating) >= star ? "text-amber-400 drop-shadow-[0_0_12px_rgba(251,191,36,0.4)]" : "text-zinc-800"}
                       />
                     </button>
                   ))}
@@ -308,20 +308,20 @@ export default function App() {
                   value={newMessage}
                   onChange={(e) => setNewMessage(e.target.value)}
                   placeholder="Partagez un avis, un prix ou une adresse..."
-                  className="w-full bg-zinc-950/50 border border-zinc-800 rounded-2xl p-4 text-sm focus:outline-none focus:border-red-600 transition-all min-h-[120px] resize-none"
+                  className="w-full bg-[#1a1a1a] border border-[#e11d48]/20 rounded-[12px] p-6 text-base text-white focus:outline-none focus:ring-2 focus:ring-[#e11d48]/50 focus:border-[#e11d48] transition-all min-h-[140px] resize-none placeholder:text-zinc-700"
                 />
                 <div className="absolute right-4 bottom-4">
                   <button 
                     type="submit"
                     disabled={!newMessage.trim() || rating === 0}
-                    className="bg-red-600 hover:bg-red-700 disabled:opacity-50 disabled:hover:bg-red-600 text-white p-3 rounded-xl transition-all active:scale-95 shadow-lg shadow-red-900/20"
+                    className="bg-[#e11d48] hover:bg-[#be123c] disabled:opacity-50 disabled:hover:bg-[#e11d48] text-white p-4 rounded-[12px] transition-all active:scale-95 shadow-xl shadow-[#e11d48]/20"
                   >
-                    <Navigation size={18} className="rotate-90" />
+                    <Navigation size={20} className="rotate-90" />
                   </button>
                 </div>
               </div>
               <div className="flex items-center gap-2 text-[10px] text-zinc-600 font-bold uppercase tracking-widest px-2">
-                <ShieldCheck size={12} />
+                <ShieldCheck size={12} className="text-[#e11d48]" />
                 Publication Anonyme Activée
               </div>
             </div>
@@ -436,61 +436,66 @@ export default function App() {
                 className="space-y-12"
               >
                 <div className="text-center">
-                  <div className="w-16 h-16 bg-red-600/10 rounded-2xl flex items-center justify-center text-red-600 mx-auto mb-6 border border-red-600/20">
-                    <Building2 size={32} />
+                  <div className="w-20 h-20 bg-[#e11d48]/10 rounded-[12px] flex items-center justify-center text-[#e11d48] mx-auto mb-8 border border-[#e11d48]/20 shadow-[0_0_20px_rgba(225,29,72,0.1)]">
+                    <Building2 size={40} />
                   </div>
-                  <h2 className="text-4xl font-black mb-4 tracking-tighter uppercase italic text-red-500">Espace Partenaires</h2>
-                  <p className="text-zinc-500 max-w-lg mx-auto font-medium italic">Référencez votre établissement sur la carte <span className="text-red-500 font-black">REDLIGHT</span> pour capter une clientèle locale ciblée.</p>
+                  <h2 className="text-6xl font-bebas mb-4 tracking-tight uppercase text-white">Espace Partenaires</h2>
+                  <p className="text-zinc-400 text-lg max-w-lg mx-auto font-medium italic">Référencez votre établissement sur la carte <span className="text-[#e11d48] font-black">REDLIGHT</span> pour capter une clientèle locale ciblée.</p>
                 </div>
 
-                <form onSubmit={handleSubmit} className="bg-zinc-900/30 border border-white/5 rounded-[40px] p-8 md:p-12 backdrop-blur-xl shadow-2xl space-y-10">
+                <form onSubmit={handleSubmit} className="bg-[#1a1a1a]/40 border border-[#e11d48]/10 rounded-[32px] p-8 md:p-16 backdrop-blur-xl shadow-2xl space-y-12">
                   {/* Informations Générales */}
-                  <div className="space-y-6">
-                    <h3 className="text-xs font-black text-red-600 uppercase tracking-[0.3em] pl-2 border-l-2 border-red-600">Informations Générales</h3>
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <div className="space-y-2">
+                  <div className="space-y-8">
+                    <h3 className="text-2xl font-bebas text-[#e11d48] uppercase tracking-wide border-l-4 border-[#e11d48] pl-4">Informations Générales</h3>
+                    <div className="grid md:grid-cols-2 gap-8">
+                      <div className="space-y-3">
                         <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest px-2">Nom de l'établissement</label>
                         <input 
                           required
                           type="text"
                           placeholder="Ex: Résidence Emeraude"
-                          className="w-full bg-zinc-950/50 border border-zinc-800 rounded-2xl p-4 text-sm focus:outline-none focus:border-red-600 transition-all font-medium"
+                          className="w-full bg-[#1a1a1a] border border-[#e11d48]/20 rounded-[12px] p-5 text-base text-white focus:outline-none focus:ring-2 focus:ring-[#e11d48]/50 focus:border-[#e11d48] transition-all font-medium placeholder:text-zinc-700"
                           value={formData.Nom}
                           onChange={e => setFormData({...formData, Nom: e.target.value})}
                         />
                       </div>
-                      <div className="space-y-2">
+                      <div className="space-y-3">
                          <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest px-2">Téléphone (WhatsApp)</label>
                          <input 
                            required
                            type="tel"
                            placeholder="Ex: 0707..."
-                           className="w-full bg-zinc-950/50 border border-zinc-800 rounded-2xl p-4 text-sm focus:outline-none focus:border-red-600 transition-all font-medium"
+                           className="w-full bg-[#1a1a1a] border border-[#e11d48]/20 rounded-[12px] p-5 text-base text-white focus:outline-none focus:ring-2 focus:ring-[#e11d48]/50 focus:border-[#e11d48] transition-all font-medium placeholder:text-zinc-700"
                            value={formData.Telephone}
                            onChange={e => setFormData({...formData, Telephone: e.target.value})}
                          />
                       </div>
-                      <div className="space-y-2">
+                      <div className="space-y-3">
                          <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest px-2">Commune</label>
-                         <select 
-                          required
-                          className="w-full bg-zinc-950/50 border border-zinc-800 rounded-2xl p-4 text-sm focus:outline-none focus:border-red-600 transition-all font-medium appearance-none"
-                          value={formData.Commune}
-                          onChange={e => setFormData({...formData, Commune: e.target.value})}
-                         >
-                           <option value="">Sélectionnez une commune</option>
-                           {ABIDJAN_COMMUNES.map(c => (
-                             <option key={c} value={c}>{c}</option>
-                           ))}
-                         </select>
+                         <div className="relative">
+                           <select 
+                            required
+                            className="w-full bg-[#1a1a1a] border border-[#e11d48]/20 rounded-[12px] p-5 text-base text-white focus:outline-none focus:ring-2 focus:ring-[#e11d48]/50 focus:border-[#e11d48] transition-all font-medium appearance-none"
+                            value={formData.Commune}
+                            onChange={e => setFormData({...formData, Commune: e.target.value})}
+                           >
+                             <option value="">Sélectionnez une commune</option>
+                             {ABIDJAN_COMMUNES.map(c => (
+                               <option key={c} value={c}>{c}</option>
+                             ))}
+                           </select>
+                           <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-[#e11d48]">
+                             <Navigation size={14} className="rotate-180" />
+                           </div>
+                         </div>
                       </div>
-                      <div className="space-y-2">
+                      <div className="space-y-3">
                         <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest px-2">Quartier Précis</label>
                         <input 
                           required
                           type="text"
                           placeholder="Ex: Riviera Palmeraie"
-                          className="w-full bg-zinc-950/50 border border-zinc-800 rounded-2xl p-4 text-sm focus:outline-none focus:border-red-600 transition-all font-medium"
+                          className="w-full bg-[#1a1a1a] border border-[#e11d48]/20 rounded-[12px] p-5 text-base text-white focus:outline-none focus:ring-2 focus:ring-[#e11d48]/50 focus:border-[#e11d48] transition-all font-medium placeholder:text-zinc-700"
                           value={formData.Quartier}
                           onChange={e => setFormData({...formData, Quartier: e.target.value})}
                         />
@@ -499,31 +504,31 @@ export default function App() {
                   </div>
 
                   {/* Grille Tarifaire */}
-                  <div className="space-y-6">
-                    <h3 className="text-xs font-black text-red-600 uppercase tracking-[0.3em] pl-2 border-l-2 border-red-600">Grille Tarifaire (FCFA)</h3>
+                  <div className="space-y-8">
+                    <h3 className="text-2xl font-bebas text-[#e11d48] uppercase tracking-wide border-l-4 border-[#e11d48] pl-4">Grille Tarifaire (FCFA)</h3>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                      <div className="space-y-2">
+                      <div className="space-y-3">
                         <label className="text-[9px] font-black text-zinc-600 uppercase tracking-widest px-2">Heure (Ventilé)</label>
-                        <input type="number" placeholder="2000" className="w-full bg-zinc-950/50 border border-zinc-800 rounded-xl p-3 text-sm focus:outline-none focus:border-red-600" value={formData.Prix_Heure_Ventile} onChange={e => setFormData({...formData, Prix_Heure_Ventile: e.target.value})} />
+                        <input type="number" placeholder="2000" className="w-full bg-[#1a1a1a] border border-[#e11d48]/20 rounded-[12px] p-4 text-base focus:outline-none focus:ring-2 focus:ring-[#e11d48]/50 transition-all" value={formData.Prix_Heure_Ventile} onChange={e => setFormData({...formData, Prix_Heure_Ventile: e.target.value})} />
                       </div>
-                      <div className="space-y-2">
+                      <div className="space-y-3">
                         <label className="text-[9px] font-black text-zinc-600 uppercase tracking-widest px-2">Heure (Clim)</label>
-                        <input type="number" placeholder="4000" className="w-full bg-zinc-950/50 border border-zinc-800 rounded-xl p-3 text-sm focus:outline-none focus:border-red-600" value={formData.Prix_Heure_Clim} onChange={e => setFormData({...formData, Prix_Heure_Clim: e.target.value})} />
+                        <input type="number" placeholder="4000" className="w-full bg-[#1a1a1a] border border-[#e11d48]/20 rounded-[12px] p-4 text-base focus:outline-none focus:ring-2 focus:ring-[#e11d48]/50 transition-all" value={formData.Prix_Heure_Clim} onChange={e => setFormData({...formData, Prix_Heure_Clim: e.target.value})} />
                       </div>
-                      <div className="space-y-2">
+                      <div className="space-y-3">
                         <label className="text-[9px] font-black text-zinc-600 uppercase tracking-widest px-2">Nuit (Ventilé)</label>
-                        <input type="number" placeholder="8000" className="w-full bg-zinc-950/50 border border-zinc-800 rounded-xl p-3 text-sm focus:outline-none focus:border-red-600" value={formData.Prix_Nuit_Ventile} onChange={e => setFormData({...formData, Prix_Nuit_Ventile: e.target.value})} />
+                        <input type="number" placeholder="8000" className="w-full bg-[#1a1a1a] border border-[#e11d48]/20 rounded-[12px] p-4 text-base focus:outline-none focus:ring-2 focus:ring-[#e11d48]/50 transition-all" value={formData.Prix_Nuit_Ventile} onChange={e => setFormData({...formData, Prix_Nuit_Ventile: e.target.value})} />
                       </div>
-                      <div className="space-y-2">
+                      <div className="space-y-3">
                         <label className="text-[9px] font-black text-zinc-600 uppercase tracking-widest px-2">Nuit (Clim)</label>
-                        <input type="number" placeholder="15000" className="w-full bg-zinc-950/50 border border-zinc-800 rounded-xl p-3 text-sm focus:outline-none focus:border-red-600" value={formData.Prix_Nuit_Clim} onChange={e => setFormData({...formData, Prix_Nuit_Clim: e.target.value})} />
+                        <input type="number" placeholder="15000" className="w-full bg-[#1a1a1a] border border-[#e11d48]/20 rounded-[12px] p-4 text-base focus:outline-none focus:ring-2 focus:ring-[#e11d48]/50 transition-all" value={formData.Prix_Nuit_Clim} onChange={e => setFormData({...formData, Prix_Nuit_Clim: e.target.value})} />
                       </div>
                     </div>
                   </div>
 
                   {/* Commodités */}
-                  <div className="space-y-6">
-                    <h3 className="text-xs font-black text-red-600 uppercase tracking-[0.3em] pl-2 border-l-2 border-red-600">Équipements & Services</h3>
+                  <div className="space-y-8">
+                    <h3 className="text-2xl font-bebas text-[#e11d48] uppercase tracking-wide border-l-4 border-[#e11d48] pl-4">Équipements & Services</h3>
                     <div className="flex flex-wrap gap-4">
                       {[
                         { key: 'Wifi', label: 'Wifi Gratuit' },
@@ -534,44 +539,44 @@ export default function App() {
                           key={item.key}
                           type="button"
                           onClick={() => toggleAmenity(item.key as any)}
-                          className={`flex items-center gap-2 px-6 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all border ${
+                          className={`flex items-center gap-3 px-8 py-4 rounded-[12px] text-[10px] font-black uppercase tracking-widest transition-all border ${
                             formData[item.key as keyof typeof formData] === true
-                            ? 'bg-red-600 border-red-600 text-white shadow-[0_0_15px_rgba(220,38,38,0.2)]'
-                            : 'bg-zinc-950/50 border-zinc-800 text-zinc-600 hover:border-zinc-700'
+                            ? 'bg-[#e11d48] border-[#e11d48] text-white shadow-[0_0_20px_rgba(225,29,72,0.3)]'
+                            : 'bg-[#1a1a1a] border-zinc-800 text-zinc-600 hover:border-[#e11d48]/30'
                           }`}
                         >
-                          {formData[item.key as keyof typeof formData] === true ? <CheckCircle2 size={14} /> : <div className="w-3.5 h-3.5 rounded-full border border-current" />}
+                          {formData[item.key as keyof typeof formData] === true ? <CheckCircle2 size={16} /> : <div className="w-4 h-4 rounded-full border border-current" />}
                           {item.label}
                         </button>
                       ))}
                     </div>
                   </div>
 
-                  <div className="p-5 bg-red-950/10 border border-red-900/20 rounded-3xl flex gap-4">
-                    <Navigation className="text-red-600 shrink-0 mt-1" size={18} />
-                    <p className="text-[11px] text-zinc-400 font-medium leading-relaxed italic">
+                  <div className="p-6 bg-red-950/10 border border-red-900/20 rounded-[12px] flex gap-5">
+                    <Navigation className="text-[#e11d48] shrink-0 mt-1" size={24} />
+                    <p className="text-sm text-zinc-400 font-medium leading-relaxed italic">
                       Les coordonnées GPS seront relevées sur place par nos agents ou vérifiées via vos photos pour garantir l'exactitude des épingles rouges sur la carte officielle.
                     </p>
                   </div>
 
                   <button 
                     type="submit"
-                    className="w-full bg-red-600 hover:bg-red-700 text-white font-black py-6 rounded-3xl text-sm uppercase tracking-[0.3em] transition-all shadow-2xl shadow-red-900/40 active:scale-[0.98] mt-4"
+                    className="w-full bg-[#e11d48] hover:bg-[#be123c] text-white font-black py-6 rounded-[12px] text-base uppercase tracking-[0.3em] transition-all shadow-2xl shadow-[#e11d48]/40 active:scale-[0.98] mt-6"
                   >
                     Soumettre mon établissement
                   </button>
 
-                  <div className="pt-8 border-t border-white/5">
-                    <p className="text-[10px] font-black text-zinc-500 uppercase tracking-widest text-center mb-4">Déjà partenaire ?</p>
+                  <div className="pt-12 border-t border-white/5 space-y-6">
+                    <p className="text-[10px] font-black text-zinc-500 uppercase tracking-widest text-center">Déjà partenaire ?</p>
                     <button 
                       type="button"
                       onClick={() => handleSubmit(null as any, true)}
-                      className="w-full bg-zinc-100 hover:bg-white text-black font-black py-5 rounded-3xl text-xs uppercase tracking-[0.2em] transition-all shadow-[0_0_30px_rgba(255,255,255,0.1)] active:scale-[0.98] flex items-center justify-center gap-3"
+                      className="w-full bg-white hover:bg-zinc-200 text-black font-black py-6 rounded-[12px] text-sm uppercase tracking-[0.2em] transition-all shadow-[0_0_40px_rgba(255,255,255,0.1)] active:scale-[0.98] flex items-center justify-center gap-4"
                     >
-                      <Lightbulb size={18} className="fill-black" />
+                      <Lightbulb size={24} className="fill-black" />
                       SIGNALEZ MON HÔTEL COMME COMPLET
                     </button>
-                    <p className="text-[9px] text-zinc-600 text-center mt-3 font-medium uppercase tracking-tighter italic">Cliquer ici éteindra instantanément votre ampoule sur la carte REDLIGHT.</p>
+                    <p className="text-px text-zinc-600 text-center font-medium uppercase tracking-tighter italic">Cliquer ici éteindra instantanément votre ampoule sur la carte REDLIGHT.</p>
                   </div>
                 </form>
               </motion.div>
