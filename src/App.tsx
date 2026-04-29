@@ -649,11 +649,11 @@ export default function App() {
             </div>
 
             {/* Boutons Utilitaires Carte */}
-            <div className="absolute top-4 left-4 z-30 flex flex-col gap-2">
+            <div className="absolute top-6 left-6 md:left-[312px] z-30 flex flex-col gap-2">
               <div className="flex gap-2 pointer-events-auto">
                 <button 
                   onClick={() => setPage('home')}
-                  className="bg-black/90 hover:bg-black text-white px-4 py-2.5 rounded-xl shadow-2xl border border-zinc-800 text-[10px] uppercase font-black tracking-widest transition-all active:scale-95"
+                  className="md:hidden bg-black/90 hover:bg-black text-white px-4 py-2.5 rounded-xl shadow-2xl border border-zinc-800 text-[10px] uppercase font-black tracking-widest transition-all active:scale-95"
                 >
                   ← Accueil
                 </button>
