@@ -177,54 +177,21 @@ export default function App() {
             className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-600 rounded-full blur-[140px] pointer-events-none z-0" 
           />
           
+          <motion.h1 
+            variants={itemVariants}
+            className="text-5xl md:text-9xl font-bebas mb-6 leading-[0.9] relative z-10 uppercase text-white drop-shadow-[0_8px_16px_rgba(0,0,0,0.8)]"
+          >
+            <span className="bg-gradient-to-b from-white to-zinc-400 bg-clip-text text-transparent">Trouvez votre hôtel</span> <br className="hidden md:block" />
+            <span className="bg-gradient-to-b from-white to-zinc-400 bg-clip-text text-transparent">au meilleur prix</span> <br className="hidden md:block" />
+            <span className="text-red-600 drop-shadow-[0_0_40px_rgba(220,38,38,0.6)]">partout à Abidjan.</span>
+          </motion.h1>
+          
           <motion.h2 
             variants={itemVariants}
-            className="text-5xl md:text-8xl font-black mb-8 tracking-tighter leading-none relative z-10 italic uppercase"
+            className="text-white/60 text-base md:text-lg mb-12 max-w-3xl mx-auto font-sans font-medium relative z-10 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] tracking-wide"
           >
-            {"ABIDJAN LA NUIT,".split("").map((char, index) => (
-              <motion.span
-                key={index}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.03, duration: 0.5 }}
-              >
-                {char}
-              </motion.span>
-            ))}
-            <br />
-            <motion.span 
-              initial={{ opacity: 0, filter: 'blur(10px)' }}
-              animate={{ opacity: 1, filter: 'blur(0px)' }}
-              transition={{ delay: 0.8, duration: 1.2 }}
-              className="text-red-600 drop-shadow-[0_0_30px_rgba(220,38,38,0.4)] inline-block mt-2"
-            >
-              {"EN TOUTE SIMPLICITÉ.".split("").map((char, index) => (
-                <motion.span
-                  key={index}
-                  animate={{ 
-                    opacity: [1, 0.4, 1],
-                    textShadow: ["0 0 10px rgba(220,38,38,0.4)", "0 0 20px rgba(220,38,38,0.8)", "0 0 10px rgba(220,38,38,0.4)"] 
-                  }}
-                  transition={{ 
-                    delay: 1 + (index * 0.05), 
-                    duration: 2, 
-                    repeat: Infinity,
-                    repeatDelay: Math.random() * 2
-                  }}
-                >
-                  {char}
-                </motion.span>
-              ))}
-            </motion.span>
+            De Yopougon à Cocody, découvrez les tarifs passage et nuitée les moins chers en temps réel sur la carte.
           </motion.h2>
-          
-          <motion.p 
-            variants={itemVariants}
-            className="text-zinc-500 text-lg md:text-xl mb-12 max-w-2xl mx-auto font-medium relative z-10 italic"
-          >
-            Découvrez les meilleurs établissements économiques à Yopougon et partout ailleurs. 
-            Une cartographie discrète pour un confort immédiat.
-          </motion.p>
 
           <motion.div 
             variants={itemVariants}
@@ -232,10 +199,10 @@ export default function App() {
           >
             <button 
               onClick={() => setPage('map')}
-              className="bg-red-600 hover:bg-red-700 text-white px-10 py-5 rounded-lg font-black text-xs uppercase tracking-widest flex items-center gap-3 transition-all hover:scale-105 shadow-xl shadow-red-900/20 active:scale-95"
+              className="bg-red-600 hover:bg-red-700 text-white px-12 py-6 rounded-xl font-black text-xs uppercase tracking-widest flex items-center gap-4 transition-all hover:scale-105 shadow-2xl shadow-red-900/40 active:scale-95"
             >
-              <MapIcon size={18} />
-              Ouvrir la Carte
+              <MapIcon size={20} />
+              Voir les hôtels à proximité
             </button>
             <button 
               onClick={() => setPage('forum')}
